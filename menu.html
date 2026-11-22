@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menú & Carta | Brieva. Café & Charcutería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #f5f3eb;
+      --bg-card: #ffffff;
+      --olive-primary: #4a5d32;
+      --olive-dark: #364523;
+      --olive-soft: #e6eadf;
+      --text-main: #232620;
+      --text-muted: #62665c;
+      --border-neutral: #dcd9ce;
+      --shadow-soft: 0 10px 28px rgba(74, 93, 50, 0.08);
+      --shadow-hover: 0 14px 32px rgba(74, 93, 50, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 18px 64px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 740px;
+    }
+
+    /* Barra superior */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-neutral);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      transform: translateX(-3px);
+    }
+
+    .mini-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .mini-brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--olive-primary);
+      object-fit: cover;
+    }
+
+    .mini-brand span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--olive-primary);
+    }
+
+    /* Cabecera */
+    .page-header {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      color: var(--olive-primary);
+      line-height: 1.15;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      max-width: 540px;
+      margin: 8px auto 0;
+    }
+
+    /* Pestañas de filtro */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .tab-btn {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--olive-primary);
+      color: var(--olive-primary);
+    }
+
+    .tab-btn.active {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Cartas visuales oficiales */
+    .menu-posters {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .poster-card {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      cursor: pointer;
+      transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+    }
+
+    .poster-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .poster-card img {
+      width: 100%;
+      aspect-ratio: 9 / 15;
+      object-fit: cover;
+      display: block;
+    }
+
+    .poster-footer {
+      padding: 11px 12px;
+      text-align: center;
+      background-color: var(--bg-card);
+    }
+
+    .poster-footer h3 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+    }
+
+    .poster-footer span {
+      font-size: 0.76rem;
+      color: var(--text-muted);
+    }
+
+    /* Secciones del menú */
+    .menu-section {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 22px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-soft);
+      animation: fadeUp 0.4s ease;
+    }
+
+    .menu-section.hidden {
+      display: none;
+    }
+
+    .section-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border-neutral);
+      padding-bottom: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-top h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.55rem;
+      color: var(--olive-primary);
+    }
+
+    .tag-pill {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    .section-showcase {
+      display: grid;
+      grid-template-columns: 195px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    /* Columna izquierda: vista preliminar interactiva */
+    .preview-panel {
+      position: sticky;
+      top: 18px;
+      background-color: var(--bg-cream);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 18px;
+      padding: 10px;
+      text-align: center;
+    }
+
+    .showcase-img {
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid var(--border-neutral);
+      display: block;
+      transition: opacity 0.22s ease, transform 0.25s ease;
+      cursor: pointer;
+    }
+
+    .showcase-img.is-changing {
+      opacity: 0.25;
+      transform: scale(0.97);
+    }
+
+    .preview-label {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--olive-dark);
+      line-height: 1.25;
+    }
+
+    .preview-price {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--olive-primary);
+      margin-top: 2px;
+    }
+
+    .preview-hint {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Items seleccionables */
+    .items-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 14px;
+    }
+
+    .menu-item {
+      padding: 10px 12px;
+      border-radius: 14px;
+      background-color: var(--bg-cream);
+      border: 1.5px solid transparent;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
+    }
+
+    .menu-item:hover {
+      border-color: var(--olive-primary);
+      transform: translateY(-2px);
+    }
+
+    .menu-item.selected {
+      background-color: var(--olive-soft);
+      border-color: var(--olive-primary);
+      box-shadow: 0 4px 12px rgba(74, 93, 50, 0.12);
+    }
+
+    .item-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .item-head h4 {
+      font-size: 0.94rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .item-price {
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--olive-primary);
+      white-space: nowrap;
+    }
+
+    .item-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 3px;
+    }
+
+    /* Extras y personalización */
+    .extras-bar {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .extra-box {
+      background-color: var(--olive-soft);
+      border-radius: 14px;
+      padding: 12px 14px;
+    }
+
+    .extra-box h5 {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--olive-dark);
+      margin-bottom: 4px;
+    }
+
+    .extra-box p {
+      font-size: 0.8rem;
+      color: var(--text-main);
+    }
+
+    /* Navegación inferior */
+    .bottom-links {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .nav-pill-btn {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 14px 18px;
+      border-radius: 16px;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .nav-pill-btn.secondary {
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      border: 1.5px solid var(--border-neutral);
+    }
+
+    .nav-pill-btn.secondary:hover {
+      background-color: var(--olive-soft);
+    }
+
+    /* Visor Modal */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 28, 22, 0.88);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      position: relative;
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .lightbox-content img {
+      width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+    }
+
+    .close-lightbox {
+      margin-top: 12px;
+      background: var(--bg-cream);
+      color: var(--olive-dark);
+      border: none;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 30px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .menu-posters {
+        grid-template-columns: 1fr;
+      }
+      .poster-card img {
+        aspect-ratio: 4 / 3;
+        object-position: top;
+      }
+      .section-showcase {
+        grid-template-columns: 1fr;
+      }
+      .preview-panel {
+        position: static;
+      }
+      .showcase-img {
+        height: 200px;
+      }
+      .items-grid,
+      .extras-bar {
+        grid-template-columns: 1fr;
+      }
+      .bottom-links {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <!-- NAVEGACIÓN SUPERIOR -->
+    <nav class="top-nav">
+      <a href="index.html" class="back-btn">&larr; Volver al inicio</a>
+      <a href="index.html" class="mini-brand">
+        <span>Brieva.</span>
+      </a>
+    </nav>
+
+    <!-- CABECERA -->
+    <header class="page-header">
+      <h1>Nuestra Carta</h1>
+      <p>Haz clic en cualquier bebida, ciabatta o tabla para ver su foto en la vista preliminar de la izquierda.</p>
+    </header>
+
+    <!-- CARTAS VISUALES OFICIALES -->
+    <section class="menu-posters" aria-label="Cartas oficiales">
+      <article class="poster-card" onclick="abrirCarta('img/menu-general.jpeg', 'Menú General Brieva')">
+        <img src="img/menu-general.png" alt="Menú General Brieva">
+        <div class="poster-footer">
+          <h3>Menú General</h3>
+          <span>Toca para ampliar</span>
+        </div>
+      </article>
+
+      <article class="poster-card" onclick="abrirCarta('img/bebidas-especiales.jpeg', 'Special Drinks Brieva')">
+        <img src="img/bebidas-especiales.png" alt="Special Drinks Brieva">
+        <div class="poster-footer">
+          <h3>Special Drinks</h3>
+          <span>Toca para ampliar</span>
+        </div>
+      </article>
+
+      <article class="poster-card" onclick="abrirCarta('img/ciabattas.jpeg', 'Ciabattas y Tablas Brieva')">
+        <img src="img/ciabattas.png" alt="Ciabattas y Tablas Brieva">
+        <div class="poster-footer">
+          <h3>Ciabattas &amp; Tablas</h3>
+          <span>Toca para ampliar</span>
+        </div>
+      </article>
+    </section>
+
+    <!-- FILTROS INTERACTIVOS -->
+    <div class="filter-tabs" role="tablist">
+      <button class="tab-btn active" onclick="filtrarMenu('todos', this)">Todo el menú</button>
+      <button class="tab-btn" onclick="filtrarMenu('especiales', this)">Special Drinks</button>
+      <button class="tab-btn" onclick="filtrarMenu('barra', this)">Café &amp; Matcha</button>
+      <button class="tab-btn" onclick="filtrarMenu('comida', this)">Ciabattas &amp; Charcutería</button>
+    </div>
+
+    <!-- SECCIÓN 1: SPECIAL DRINKS -->
+    <section class="menu-section" data-category="especiales">
+      <div class="section-top">
+        <h2>Special Drinks</h2>
+        <span class="tag-pill">Toca una bebida</span>
+      </div>
+      <div class="section-showcase">
+        <div class="preview-panel">
+          <img id="prev-especiales" src="img/productos/01_Brieva_Latte.png" alt="Vista previa Brieva Latte" class="showcase-img" onclick="abrirCarta(this.src, document.getElementById('cap-especiales').textContent)">
+          <p id="cap-especiales" class="preview-label">Brieva Latte</p>
+          <p id="price-especiales" class="preview-price">$120</p>
+          <p class="preview-hint">Toca la foto para ampliar</p>
+        </div>
+
+        <div class="items-grid">
+          <div class="menu-item selected" onclick="cambiarVista('especiales', 'img/productos/01_Brieva_Latte.png', 'Brieva Latte', '$120', this)">
+            <div class="item-head">
+              <h4>Brieva Latte</h4>
+              <span class="item-price">$120</span>
+            </div>
+            <p class="item-desc">Especialidad cremosa de la casa con toque dulce artesanal.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/02_Oldest_Manzana.png', 'Oldest Manzana', '$95', this)">
+            <div class="item-head">
+              <h4>Oldest Manzana</h4>
+              <span class="item-price">$95</span>
+            </div>
+            <p class="item-desc">Latte frío con notas de manzana especiada y rodaja deshidratada.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/03_Latte_1615.png', 'Latte 1615', '$115', this)">
+            <div class="item-head">
+              <h4>Latte 1615</h4>
+              <span class="item-price">$115</span>
+            </div>
+            <p class="item-desc">Nuestro clásico signature frío con foam aromático.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/04_Sweet_Citrus.png', 'Sweet Citrus', '$85', this)">
+            <div class="item-head">
+              <h4>Sweet Citrus</h4>
+              <span class="item-price">$85</span>
+            </div>
+            <p class="item-desc">Refrescante infusión cítrica burbujeante con naranja.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/05_Hawaiian_Matcha.png', 'Hawaiian Matcha', '$130', this)">
+            <div class="item-head">
+              <h4>Hawaiian Matcha</h4>
+              <span class="item-price">$130</span>
+            </div>
+            <p class="item-desc">Matcha ceremonial con foam tropical de piña.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/06_Brieva_Matcha.png', 'Brieva Matcha', '$125', this)">
+            <div class="item-head">
+              <h4>Brieva Matcha</h4>
+              <span class="item-price">$125</span>
+            </div>
+            <p class="item-desc">Matcha latte coronado con espuma de frutos rojos.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/07_Matcha_latte_coco.png', 'Matcha Latte Coco', '$130', this)">
+            <div class="item-head">
+              <h4>Matcha Latte Coco</h4>
+              <span class="item-price">$130</span>
+            </div>
+            <p class="item-desc">Matcha cremoso con notas suaves de coco tostado.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/08_Matcha_coconut_water.png', 'Matcha Coconut Water', '$130', this)">
+            <div class="item-head">
+              <h4>Matcha Coconut Water</h4>
+              <span class="item-price">$130</span>
+            </div>
+            <p class="item-desc">Shot de matcha ceremonial sobre agua de coco natural fría.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/09_Coldbrew_Tinto.png', 'Coldbrew Tinto', '$95', this)">
+            <div class="item-head">
+              <h4>Coldbrew Tinto</h4>
+              <span class="item-price">$95</span>
+            </div>
+            <p class="item-desc">Extracción en frío con notas de uva tinta y espuma ligera.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('especiales', 'img/productos/10_Sangria_Tonic.png', 'Sangría Tonic', '$110', this)">
+            <div class="item-head">
+              <h4>Sangría Tonic</h4>
+              <span class="item-price">$110</span>
+            </div>
+            <p class="item-desc">Espresso doble con agua tónica y reducción frutal.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: CAFÉ, MATCHA Y PERSONALIZACIÓN -->
+    <section class="menu-section" data-category="barra">
+      <div class="section-top">
+        <h2>Barra de Café &amp; Matcha</h2>
+        <span class="tag-pill">Caliente o Frío</span>
+      </div>
+      <div class="section-showcase">
+        <div class="preview-panel">
+          <img id="prev-barra" src="img/productos/07_Matcha_latte_coco.png" alt="Vista previa Línea Matcha" class="showcase-img" onclick="abrirCarta(this.src, document.getElementById('cap-barra').textContent)">
+          <p id="cap-barra" class="preview-label">Línea Matcha</p>
+          <p id="price-barra" class="preview-price">Clásicos &amp; Especiales</p>
+          <p class="preview-hint">Toca la foto para ampliar</p>
+        </div>
+
+        <div>
+          <div class="items-grid">
+            <div class="menu-item" onclick="cambiarVista('barra', 'img/productos/03_Latte_1615.png', 'Bebidas Calientes', 'Barra de Café', this)">
+              <div class="item-head">
+                <h4>Bebidas Calientes</h4>
+              </div>
+              <p class="item-desc">Americano, Latte, Chai, Matcha Latte, Tisana, Capuccino y Espresso.</p>
+            </div>
+
+            <div class="menu-item" onclick="cambiarVista('barra', 'img/productos/04_Sweet_Citrus.png', 'Bebidas Frías', 'Barra Fría', this)">
+              <div class="item-head">
+                <h4>Bebidas Frías</h4>
+              </div>
+              <p class="item-desc">Americano, Latte (natural o sabor), Tisana, Chai y Espresso Tónico.</p>
+            </div>
+
+            <div class="menu-item selected" onclick="cambiarVista('barra', 'img/productos/07_Matcha_latte_coco.png', 'Línea Matcha', 'Matcha Ceremonial', this)">
+              <div class="item-head">
+                <h4>Línea Matcha</h4>
+              </div>
+              <p class="item-desc">Matcha Latte, Matcha Coco, Matcha Hawaiian y Matcha Brieva.</p>
+            </div>
+
+            <div class="menu-item" onclick="cambiarVista('barra', 'img/productos/02_Oldest_Manzana.png', 'Postres & Ensalada', 'Pan de elote, Cheesecake y Toscana', this)">
+              <div class="item-head">
+                <h4>Postres &amp; Ensalada</h4>
+              </div>
+              <p class="item-desc">Cheesecake (banana o cereza), pan de elote artesanal y Ensalada Toscana.</p>
+            </div>
+          </div>
+
+          <div class="extras-bar">
+            <div class="extra-box">
+              <h5>Jarabes</h5>
+              <p>Vainilla, Caramelo, Salted Caramel, Caramel Macchiato, Banana y Butter Toffee.</p>
+            </div>
+            <div class="extra-box">
+              <h5>Sabores de Foams</h5>
+              <p>Plátano, Coco, Hawaiian y Nuez.</p>
+            </div>
+            <div class="extra-box">
+              <h5>Extras</h5>
+              <p>Shot espresso extra, jarabe extra, foam y leche vegetal.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: CIABATTAS Y CHARCUTERÍA -->
+    <section class="menu-section" data-category="comida">
+      <div class="section-top">
+        <h2>Ciabattas &amp; Charcutería</h2>
+        <span class="tag-pill">Toca un platillo</span>
+      </div>
+      <div class="section-showcase">
+        <div class="preview-panel">
+          <img id="prev-comida" src="img/productos/11_Ciabatta_Capresse.png" alt="Vista previa Ciabatta Capresse" class="showcase-img" onclick="abrirCarta(this.src, document.getElementById('cap-comida').textContent)">
+          <p id="cap-comida" class="preview-label">Ciabatta Capresse</p>
+          <p id="price-comida" class="preview-price">Ciabatta artesanal</p>
+          <p class="preview-hint">Toca la foto para ampliar</p>
+        </div>
+
+        <div class="items-grid">
+          <div class="menu-item selected" onclick="cambiarVista('comida', 'img/productos/11_Ciabatta_Capresse.png', 'Ciabatta Capresse', 'Ciabatta artesanal', this)">
+            <div class="item-head">
+              <h4>Ciabatta Capresse</h4>
+            </div>
+            <p class="item-desc">Tomate fresco, mozzarella fresca, albahaca, aceite de oliva, tapenade y parmesano.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/12_Ciabatta_Italiano.png', 'Ciabatta Italiano', 'Ciabatta artesanal', this)">
+            <div class="item-head">
+              <h4>Ciabatta Italiano</h4>
+            </div>
+            <p class="item-desc">Salami, queso provolone, tomate deshidratado, pimiento asado, lechugas mixtas y pesto.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/13_Ciabatta_Roast_Dijon.png', 'Ciabatta Roast Dijon', 'Ciabatta artesanal', this)">
+            <div class="item-head">
+              <h4>Ciabatta Roast Dijon</h4>
+            </div>
+            <p class="item-desc">Roast beef, queso gouda, lechuga mixta, vinagreta y mayonesa Dijon.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/14_Ciabatta_Ahumado.png', 'Ciabatta Ahumado', 'Ciabatta artesanal', this)">
+            <div class="item-head">
+              <h4>Ciabatta Ahumado</h4>
+            </div>
+            <p class="item-desc">Jamón ahumado, queso manchego, pimiento asado, lechugas mixtas y alioli suave.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/15_Tabla_Pinchos.png', 'Pinchos', 'Charcutería individual', this)">
+            <div class="item-head">
+              <h4>Pinchos</h4>
+            </div>
+            <p class="item-desc">Banderillas de quesos, embutidos, aceitunas y fruta fresca.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/17_Tabla_1-2_personas.png', 'Tabla 1–2 personas', 'Bowl para compartir', this)">
+            <div class="item-head">
+              <h4>Tabla 1–2 personas</h4>
+            </div>
+            <p class="item-desc">Ideal para compartir con quesos, embutidos, uvas, fresas y galletas.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/16_Tabla_Personalizado.png', 'Tablas 3–4 y 5–6 personas', 'Para compartir en grupo', this)">
+            <div class="item-head">
+              <h4>Tablas 3–4 y 5–6 personas</h4>
+            </div>
+            <p class="item-desc">Opciones abundantes para reuniones o mesas compartidas.</p>
+          </div>
+
+          <div class="menu-item" onclick="cambiarVista('comida', 'img/productos/16_Tabla_Personalizado.png', 'Personalizado & Salsas', 'Arándano, Cacahuate o Almendra', this)">
+            <div class="item-head">
+              <h4>Personalizado &amp; Salsas</h4>
+            </div>
+            <p class="item-desc">Tabla personalizada y salsas de arándano, cacahuate o almendra.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <div class="bottom-links">
+      <a href="novedades.html" class="nav-pill-btn">Ver Novedades &amp; Temporada &rarr;</a>
+      <a href="eventos.html" class="nav-pill-btn secondary">Eventos &amp; Comunidad</a>
+    </div>
+
+    <footer>
+      <p>Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana &bull; Brieva. Café &amp; Charcutería</p>
+    </footer>
+  </main>
+
+  <!-- VISOR MODAL -->
+  <div class="lightbox" id="lightbox" onclick="cerrarCarta()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Carta ampliada">
+      <br>
+      <button type="button" class="close-lightbox" onclick="cerrarCarta()">Cerrar vista</button>
+    </div>
+  </div>
+
+  <script>
+    function cambiarVista(seccion, rutaImagen, nombreProducto, subtexto, elementoClickeado) {
+      const img = document.getElementById('prev-' + seccion);
+      const cap = document.getElementById('cap-' + seccion);
+      const price = document.getElementById('price-' + seccion);
+      const seccionContenedora = elementoClickeado.closest('.menu-section');
+
+      seccionContenedora.querySelectorAll('.menu-item').forEach(item => {
+        item.classList.remove('selected');
+      });
+      elementoClickeado.classList.add('selected');
+
+      img.classList.add('is-changing');
+      setTimeout(() => {
+        img.src = rutaImagen;
+        img.alt = 'Vista previa ' + nombreProducto;
+        cap.textContent = nombreProducto;
+        if (price) {
+          price.textContent = subtexto;
+        }
+        img.classList.remove('is-changing');
+      }, 140);
+    }
+
+    function filtrarMenu(categoria, boton) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      boton.classList.add('active');
+
+      document.querySelectorAll('.menu-section').forEach(sec => {
+        if (categoria === 'todos' || sec.dataset.category === categoria) {
+          sec.classList.remove('hidden');
+        } else {
+          sec.classList.add('hidden');
+        }
+      });
+    }
+
+    function abrirCarta(rutaImagen, titulo) {
+      const visor = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = rutaImagen;
+      img.alt = titulo;
+      visor.classList.add('open');
+    }
+
+    function cerrarCarta() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eventos & Comunidad | Brieva. Café & Charcutería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #f5f3eb;
+      --bg-card: #ffffff;
+      --olive-primary: #4a5d32;
+      --olive-dark: #364523;
+      --olive-soft: #e6eadf;
+      --text-main: #232620;
+      --text-muted: #62665c;
+      --border-neutral: #dcd9ce;
+      --shadow-soft: 0 10px 28px rgba(74, 93, 50, 0.08);
+      --shadow-hover: 0 14px 32px rgba(74, 93, 50, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 18px 64px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 740px;
+    }
+
+    /* Barra superior */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-neutral);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      transform: translateX(-3px);
+    }
+
+    .mini-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .mini-brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--olive-primary);
+      object-fit: cover;
+    }
+
+    .mini-brand span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--olive-primary);
+    }
+
+    /* Cabecera */
+    .page-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      color: var(--olive-primary);
+      line-height: 1.15;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      max-width: 550px;
+      margin: 8px auto 0;
+    }
+
+    /* Filtros interactivos */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .tab-btn {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--olive-primary);
+      color: var(--olive-primary);
+    }
+
+    .tab-btn.active {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Evento principal destacado */
+    .featured-event {
+      display: grid;
+      grid-template-columns: 245px 1fr;
+      gap: 20px;
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--olive-primary);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+      animation: fadeUp 0.45s ease;
+    }
+
+    .featured-event.hidden,
+    .event-card.hidden,
+    .hiring-card.hidden {
+      display: none;
+    }
+
+    .featured-img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .featured-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    .badge.highlight {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+    }
+
+    .featured-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--olive-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .featured-body p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .meta-box {
+      background-color: var(--bg-cream);
+      border: 1px solid var(--border-neutral);
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.84rem;
+      margin-bottom: 14px;
+    }
+
+    .meta-box div {
+      padding: 2px 0;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-primary-sm {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.22s ease, transform 0.2s ease;
+    }
+
+    .btn-primary-sm:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary-sm {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      border: 1px solid var(--border-neutral);
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-secondary-sm:hover,
+    .btn-secondary-sm.active-rsvp {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+    }
+
+    /* Grid de eventos y momentos de comunidad */
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .event-card {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeUp 0.45s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .event-card img {
+      width: 100%;
+      height: 225px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .event-content {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .event-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--olive-primary);
+      margin-bottom: 6px;
+    }
+
+    .event-content p {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      flex: 1;
+    }
+
+    /* Tarjeta interactiva de vacante / comunidad */
+    .hiring-card {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 18px;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+      animation: fadeUp 0.45s ease;
+    }
+
+    .hiring-card img {
+      width: 100%;
+      height: 205px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .hiring-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--olive-primary);
+      margin-bottom: 6px;
+    }
+
+    .hiring-card p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .cv-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .phone-pill {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 8px 14px;
+      border-radius: 12px;
+    }
+
+    .feedback-text {
+      font-size: 0.8rem;
+      color: var(--olive-primary);
+      font-weight: 700;
+      margin-top: 8px;
+      min-height: 18px;
+    }
+
+    /* Navegación inferior */
+    .bottom-links {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .nav-pill-btn {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 14px 18px;
+      border-radius: 16px;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .nav-pill-btn.secondary {
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      border: 1.5px solid var(--border-neutral);
+    }
+
+    .nav-pill-btn.secondary:hover {
+      background-color: var(--olive-soft);
+    }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 28, 22, 0.88);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .lightbox-content img {
+      width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 18px;
+    }
+
+    .close-lightbox {
+      margin-top: 12px;
+      background: var(--bg-cream);
+      color: var(--olive-dark);
+      border: none;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 30px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .featured-event,
+      .hiring-card {
+        grid-template-columns: 1fr;
+      }
+      .featured-img {
+        height: 260px;
+      }
+      .events-grid {
+        grid-template-columns: 1fr;
+      }
+      .bottom-links {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <!-- NAVEGACIÓN SUPERIOR -->
+    <nav class="top-nav">
+      <a href="index.html" class="back-btn">&larr; Volver al inicio</a>
+      <a href="index.html" class="mini-brand">
+        <span>Brieva.</span>
+      </a>
+    </nav>
+
+    <!-- CABECERA -->
+    <header class="page-header">
+      <h1>Eventos &amp; Comunidad</h1>
+      <p>Pop-ups invitados, encuentros alrededor del café y la charcutería, arte en el espacio y oportunidades para sumarte al equipo.</p>
+    </header>
+
+    <!-- FILTROS INTERACTIVOS -->
+    <div class="filter-tabs" role="tablist">
+      <button class="tab-btn active" onclick="filtrarEventos('todos', this)">Todo</button>
+      <button class="tab-btn" onclick="filtrarEventos('popups', this)">Pop-Ups &amp; Fechas</button>
+      <button class="tab-btn" onclick="filtrarEventos('espacio', this)">Espacio &amp; Arte</button>
+      <button class="tab-btn" onclick="filtrarEventos('equipo', this)">Únete al Equipo</button>
+    </div>
+
+    <!-- EVENTO DESTACADO: PIZZA POP UP & COFFEE -->
+    <section class="featured-event" data-category="popups">
+      <img src="img/pizza-popup.jpg" alt="Pizza Pop Up & Coffee con Forno Di Plata" class="featured-img" onclick="abrirModal('img/pizza-popup.jpg', 'Pizza Pop Up & Coffee')">
+      <div class="featured-body">
+        <div class="badge-row">
+          <span class="badge highlight">Pop-Up Invitado</span>
+          <span class="badge">Forno Di Plata</span>
+        </div>
+        <h2>Pizza Pop Up &amp; Coffee</h2>
+        <p>
+          Una jornada de convivencia con pizza artesanal recién horneada, café de especialidad, matcha y tablas para compartir en buena compañía.
+        </p>
+        <div class="meta-box">
+          <div><strong>Fecha y hora:</strong> Sábado 7 Nov &bull; 12:00 PM – 8:00 PM</div>
+          <div><strong>Lugar:</strong> Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana</div>
+        </div>
+        <div class="action-row">
+          <button type="button" class="btn-primary-sm" onclick="abrirModal('img/pizza-popup.jpg', 'Pizza Pop Up & Coffee')">Ver flyer</button>
+          <button type="button" class="btn-secondary-sm" onclick="confirmarAsistencia(this)">Me interesa ir</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRID DE EVENTOS Y EXPERIENCIAS -->
+    <section class="events-grid">
+
+      <!-- 1. GRAND OPENING -->
+      <article class="event-card" data-category="popups">
+        <img src="img/grand-opening.jpg" alt="Grand Opening Brieva Café & Charcutería" onclick="abrirModal('img/grand-opening.jpg', 'Grand Opening Brieva')">
+        <div class="event-content">
+          <div class="badge-row">
+            <span class="badge">Celebración Especial</span>
+          </div>
+          <h3>Grand Opening</h3>
+          <p>
+            Fin de semana inaugural (Sábado 22 de 12PM a 8PM y Domingo 23 de 11AM a 7PM) con coffee, matcha, ciabattas, pinchos, quesos y arte.
+          </p>
+          <div class="action-row">
+            <button type="button" class="btn-primary-sm" onclick="abrirModal('img/grand-opening.jpg', 'Grand Opening Brieva')">Ampliar cartel</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. ARTE Y SALÓN -->
+      <article class="event-card" data-category="espacio">
+        <img src="img/arte-salon.jpg" alt="Arte y ambiente interior de Brieva" onclick="abrirModal('img/arte-salon.jpg', 'Arte y Espacio Brieva')">
+        <div class="event-content">
+          <div class="badge-row">
+            <span class="badge">Arte &amp; Ambiente</span>
+          </div>
+          <h3>Rincón de Arte &amp; Charla</h3>
+          <p>
+            Un espacio tranquilo con piezas visuales, luz natural y mesas cómodas para tardes de lectura, plática o trabajo ligero.
+          </p>
+          <div class="action-row">
+            <button type="button" class="btn-primary-sm" onclick="abrirModal('img/arte-salon.jpg', 'Arte y Espacio Brieva')">Ver espacio</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. BOWLS PARA LLEVAR / PICKNICS -->
+      <article class="event-card" data-category="espacio">
+        <img src="img/charcuteria-bowl.jpg" alt="Bowl de charcutería para llevar" onclick="abrirModal('img/charcuteria-bowl.jpg', 'Bowl para llevar')">
+        <div class="event-content">
+          <div class="badge-row">
+            <span class="badge">Para Llevar</span>
+          </div>
+          <h3>Charcutería al Aire Libre</h3>
+          <p>
+            Lleva tu bowl de quesos, embutidos, fruta fresca, galletas y aderezo para tardes en la terraza, reuniones o planes improvisados.
+          </p>
+          <div class="action-row">
+            <a href="menu.html" class="btn-primary-sm">Ver opciones</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. GREEN CLUB / COMUNIDAD -->
+      <article class="event-card" data-category="espacio">
+        <img src="img/comunidad-bebidas.jpg" alt="Comunidad Green Club Brieva" onclick="abrirModal('img/comunidad-bebidas.jpg', 'Green Club Brieva')">
+        <div class="event-content">
+          <div class="badge-row">
+            <span class="badge">Green Club</span>
+          </div>
+          <h3>Comunidad &amp; Reuniones</h3>
+          <p>
+            Cada visita suma a la comunidad de Brieva: bebidas frías, matchas especiales y mesas listas para compartir con amigos.
+          </p>
+          <div class="action-row">
+            <a href="novedades.html" class="btn-primary-sm">Ver novedades</a>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- CONVOCATORIA / ÚNETE AL EQUIPO -->
+    <section class="hiring-card" data-category="equipo">
+      <img src="img/vacante-barista.jpg" alt="We're Hiring Baristas Brieva Café" onclick="abrirModal('img/vacante-barista.jpg', 'Convocatoria Baristas Brieva')">
+      <div>
+        <div class="badge-row">
+          <span class="badge highlight">Convocatoria</span>
+          <span class="badge">Buena Vista, Tijuana</span>
+        </div>
+        <h2>We're Hiring Baristas</h2>
+        <p>
+          ¿Te apasiona el café de especialidad, el matcha y el servicio cercano? Envía tu CV para formar parte del equipo de Brieva Café.
+        </p>
+        <div class="cv-box">
+          <span class="phone-pill">CV al 664 569 7870</span>
+          <button type="button" class="btn-primary-sm" onclick="copiarTelefono()">Copiar teléfono</button>
+          <button type="button" class="btn-secondary-sm" onclick="abrirModal('img/charcuteria-mesa.jpg', 'Ambiente Brieva')">Ver terraza</button>
+        </div>
+        <p class="feedback-text" id="tel-feedback"></p>
+      </div>
+    </section>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <div class="bottom-links">
+      <a href="novedades.html" class="nav-pill-btn secondary">&larr; Novedades &amp; Temporada</a>
+      <a href="Brieva.html" class="nav-pill-btn">Volver al Inicio &rarr;</a>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Brieva. Café &amp; Charcutería &bull; Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana</p>
+    </footer>
+  </main>
+
+  <!-- VISOR MODAL -->
+  <div class="lightbox" id="lightbox" onclick="cerrarModal()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Vista ampliada">
+      <br>
+      <button type="button" class="close-lightbox" onclick="cerrarModal()">Cerrar vista</button>
+    </div>
+  </div>
+
+  <script>
+    function filtrarEventos(categoria, boton) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      boton.classList.add('active');
+
+      document.querySelectorAll('[data-category]').forEach(el => {
+        if (categoria === 'todos' || el.dataset.category === categoria) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+    }
+
+    function confirmarAsistencia(boton) {
+      boton.classList.toggle('active-rsvp');
+      if (boton.classList.contains('active-rsvp')) {
+        boton.dataset.orig = boton.textContent;
+        boton.textContent = '✓ Interés marcado';
+      } else {
+        boton.textContent = boton.dataset.orig || 'Me interesa ir';
+      }
+    }
+
+    function copiarTelefono() {
+      const telefono = "664 569 7870";
+      navigator.clipboard.writeText(telefono).then(() => {
+        const msg = document.getElementById('tel-feedback');
+        msg.textContent = "¡Número 664 569 7870 copiado para enviar tu CV!";
+        setTimeout(() => {
+          msg.textContent = "";
+        }, 2800);
+      });
+    }
+
+    function abrirModal(ruta, titulo) {
+      const modal = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = ruta;
+      img.alt = titulo;
+      modal.classList.add('open');
+    }
+
+    function cerrarModal() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>

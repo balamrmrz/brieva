@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brieva. | Café & Charcutería</title>
+  <!-- Tipografías editoriales similares a la identidad visual de Brieva -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #f5f3eb;
+      --bg-card: #ffffff;
+      --olive-primary: #4a5d32;
+      --olive-dark: #364523;
+      --olive-soft: #e6eadf;
+      --text-main: #232620;
+      --text-muted: #62665c;
+      --border-neutral: #dcd9ce;
+      --shadow-soft: 0 10px 28px rgba(74, 93, 50, 0.08);
+      --shadow-hover: 0 14px 32px rgba(74, 93, 50, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 18px 60px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 560px;
+    }
+
+    /* Cabecera / Perfil de marca */
+    .brand-header {
+      text-align: center;
+      margin-bottom: 28px;
+      animation: fadeDown 0.7s ease-out;
+    }
+
+    .logo-wrapper {
+      width: 112px;
+      height: 112px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid var(--olive-primary);
+      box-shadow: var(--shadow-soft);
+      background-color: var(--bg-cream);
+    }
+
+    .logo-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.35rem;
+      font-weight: 700;
+      color: var(--olive-primary);
+      letter-spacing: -0.5px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .brand-bio {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin: 12px auto 0;
+      max-width: 440px;
+    }
+
+    /* Tarjeta principal de portada */
+    .hero-card {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      margin-bottom: 26px;
+      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-neutral);
+      height: 230px;
+    }
+
+    .hero-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+
+    .hero-card:hover img {
+      transform: scale(1.04);
+    }
+
+    .hero-badge {
+      position: absolute;
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      background: rgba(245, 243, 235, 0.92);
+      backdrop-filter: blur(8px);
+      padding: 10px 16px;
+      border-radius: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.86rem;
+      color: var(--olive-dark);
+      font-weight: 500;
+    }
+
+    .hero-badge span.dot {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background-color: var(--olive-primary);
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    /* Sección de 5 enlaces interactivos */
+    .section-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.8px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 4px;
+    }
+
+    .links-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 30px;
+    }
+
+    .link-btn {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      padding: 16px 20px;
+      border-radius: 18px;
+      border: 1.5px solid var(--border-neutral);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.28s cubic-bezier(0.25, 0.8, 0.25, 1);
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    /* Efecto de brillo sutil al pasar el cursor */
+    .link-btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 60%;
+      height: 100%;
+      background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(74, 93, 50, 0.08),
+        transparent
+      );
+      transition: left 0.55s ease;
+    }
+
+    .link-btn:hover::before {
+      left: 130%;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-3px);
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .link-btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    /* Botón destacado (Menú) */
+    .link-btn.primary {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+    }
+
+    .link-btn.primary .link-desc {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .link-btn.primary .link-icon {
+      background-color: rgba(255, 255, 255, 0.16);
+      color: #ffffff;
+    }
+
+    .link-btn.primary:hover {
+      background-color: var(--olive-dark);
+    }
+
+    .link-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .link-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background-color: var(--olive-soft);
+      color: var(--olive-primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: transform 0.28s ease;
+    }
+
+    .link-btn:hover .link-icon {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    .link-text h3 {
+      font-size: 1.02rem;
+      font-weight: 700;
+      line-height: 1.25;
+    }
+
+    .link-desc {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .link-arrow {
+      font-size: 1.2rem;
+      font-weight: 700;
+      opacity: 0.65;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+
+    .link-btn:hover .link-arrow {
+      transform: translateX(4px);
+      opacity: 1;
+    }
+
+    /* Vista previa de favoritos */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .preview-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1.15;
+      border: 1px solid var(--border-neutral);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .preview-item:hover img {
+      transform: scale(1.07);
+    }
+
+    .preview-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 22px 10px 8px;
+      background: linear-gradient(to top, rgba(35, 38, 32, 0.78), transparent);
+      color: #fff;
+      font-size: 0.76rem;
+      font-weight: 500;
+    }
+
+    /* Sección Interactiva de Ubicación y Horarios */
+    .location-card {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 26px;
+    }
+
+    .location-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .location-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem;
+      color: var(--olive-primary);
+    }
+
+    .status-pill {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-size: 0.76rem;
+      font-weight: 700;
+      padding: 5px 11px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    .address-text {
+      font-size: 0.92rem;
+      color: var(--text-main);
+      margin-bottom: 12px;
+    }
+
+    .hours-box {
+      background-color: var(--bg-cream);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 0.85rem;
+      margin-bottom: 16px;
+      border: 1px solid var(--border-neutral);
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 3px 0;
+    }
+
+    .hours-row strong {
+      color: var(--olive-dark);
+    }
+
+    .location-actions {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+
+    .btn-map {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 13px 16px;
+      border-radius: 14px;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .btn-map:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-copy {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      border: 1px solid var(--border-neutral);
+      border-radius: 14px;
+      padding: 0 15px;
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.84rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-copy:hover {
+      background-color: #dce2d2;
+    }
+
+    .copy-feedback {
+      font-size: 0.78rem;
+      color: var(--olive-primary);
+      font-weight: 700;
+      margin-top: 8px;
+      text-align: right;
+      min-height: 18px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 440px) {
+      .brand-title {
+        font-size: 2rem;
+      }
+      .location-actions {
+        grid-template-columns: 1fr;
+      }
+      .btn-copy {
+        padding: 11px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <!-- CABECERA -->
+    <header class="brand-header">
+      <h1 class="brand-title">Brieva.</h1>
+      <p class="brand-subtitle">Café &amp; Charcutería</p>
+      <p class="brand-bio">
+        Café de especialidad, matcha ceremonial, ciabattas artesanales y tablas de quesos para compartir en Buena Vista, Tijuana.
+      </p>
+    </header>
+
+    <!-- PORTADA VISUAL -->
+    <section class="hero-card">
+      <img src="img/fachada.jpg" alt="Fachada Brieva Café & Charcutería">
+      <div class="hero-badge">
+        <span><span class="dot"></span>Abierto en Buena Vista, TJ</span>
+        <span>Green Club</span>
+      </div>
+    </section>
+
+    <!-- LOS 5 ENLACES PRINCIPALES -->
+    <p class="section-label">Explora Brieva</p>
+    <nav class="links-stack" aria-label="Enlaces principales">
+      
+      <!-- ENLACE 1: Página independiente del Menú -->
+      <a href="menu.html" class="link-btn primary">
+        <div class="link-left">
+          <div class="link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8h1a4 4 0 1 1 0 8h-1"></path>
+              <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z"></path>
+              <line x1="6" y1="2" x2="6" y2="4"></line>
+              <line x1="10" y1="2" x2="10" y2="4"></line>
+              <line x1="14" y1="2" x2="14" y2="4"></line>
+            </svg>
+          </div>
+          <div class="link-text">
+            <h3>Nuestra Carta &amp; Menú</h3>
+            <p class="link-desc">Bebidas especiales, matcha, ciabattas y tablas de quesos</p>
+          </div>
+        </div>
+        <span class="link-arrow">&rarr;</span>
+      </a>
+
+      <!-- ENLACE 2: Página independiente de Novedades y Promos -->
+      <a href="novedades.html" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <div class="link-text">
+            <h3>Novedades &amp; Temporada</h3>
+            <p class="link-desc">Lanzamientos, bebidas especiales y promociones activas</p>
+          </div>
+        </div>
+        <span class="link-arrow">&rarr;</span>
+      </a>
+
+      <!-- ENLACE 3: Página independiente de Eventos y Comunidad -->
+      <a href="eventos.html" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+          </div>
+          <div class="link-text">
+            <h3>Eventos &amp; Comunidad</h3>
+            <p class="link-desc">Pop-ups, colaboraciones, arte y convocatorias</p>
+          </div>
+        </div>
+        <span class="link-arrow">&rarr;</span>
+      </a>
+
+      <!-- ENLACE 4: Directo a Instagram (cambia el href por tu URL exacta de Instagram) -->
+      <a href="https://www.instagram.com/brievacafe/" target="_blank" rel="noopener noreferrer" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </div>
+          <div class="link-text">
+            <h3>Visítanos en Instagram</h3>
+            <p class="link-desc">@brievacafe &bull; Fotos, historias y actualizaciones diarias</p>
+          </div>
+        </div>
+        <span class="link-arrow">&#8599;</span>
+      </a>
+
+      <!-- ENLACE 5: Salto interactivo a la tarjeta de Ubicación -->
+      <a href="#ubicacion" class="link-btn">
+        <div class="link-left">
+          <div class="link-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="link-text">
+            <h3>Ubicación &amp; Horarios</h3>
+            <p class="link-desc">Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana</p>
+          </div>
+        </div>
+        <span class="link-arrow">&darr;</span>
+      </a>
+
+    </nav>
+
+    <!-- MINI GALERÍA DESTACADA -->
+    <p class="section-label">Sobre la casa</p>
+    <section class="preview-grid">
+      <div class="preview-item">
+        <img src="img/bebidas.jpg" alt="Latte 1615 y Banana Love">
+        <div class="preview-caption">Latte 1615</div>
+      </div>
+      <div class="preview-item">
+        <img src="img/tabla1.jpg" alt="Tablitas de charcutería para llevar">
+        <div class="preview-caption">Charcutería</div>
+      </div>
+      <div class="preview-item">
+        <img src="img/interior.jpg" alt="Espacio interior de Brieva">
+        <div class="preview-caption">Nuestro Espacio</div>
+      </div>
+    </section>
+
+    <!-- TARJETA INTERACTIVA DE UBICACIÓN -->
+    <section id="ubicacion" class="location-card">
+      <div class="location-header">
+        <div>
+          <h2>¿Dónde encontrarnos?</h2>
+          <p class="address-text">Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana, B.C.</p>
+        </div>
+        <span class="status-pill" id="live-status">Verificando horario...</span>
+      </div>
+
+      <div class="hours-box">
+        <div class="hours-row">
+          <span>Lunes a Sábado</span>
+          <strong>7:30 AM – 8:00 PM</strong>
+        </div>
+        <div class="hours-row">
+          <span>Domingo</span>
+          <strong>11:00 AM – 7:00 PM</strong>
+        </div>
+      </div>
+
+      <div class="location-actions">
+        <!-- PEGA AQUÍ TU ENLACE DE GOOGLE MAPS DENTRO DE href="" -->
+        <a href="https://maps.google.com/?q=Ing.+Juan+Ojeda+Robles+930,+Buena+Vista,+Tijuana" target="_blank" rel="noopener noreferrer" class="btn-map">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="3 11 22 2 13 21 11 13 3 11"></polygon>
+          </svg>
+          Abrir en Google Maps
+        </a>
+        <button type="button" class="btn-copy" onclick="copiarDireccion()">Copiar dirección</button>
+      </div>
+      <p class="copy-feedback" id="copy-msg"></p>
+    </section>
+
+    <footer>
+      <p>&copy; 2026 Brieva. Café &amp; Charcutería &bull; Tijuana, B.C.</p>
+    </footer>
+  </main>
+
+  <script>
+    // Botón interactivo para copiar la dirección exacta al portapapeles
+    function copiarDireccion() {
+      const direccion = "Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana, B.C.";
+      navigator.clipboard.writeText(direccion).then(() => {
+        const msg = document.getElementById("copy-msg");
+        msg.textContent = "¡Dirección copiada al portapapeles!";
+        setTimeout(() => {
+          msg.textContent = "";
+        }, 2800);
+      });
+    }
+
+    // Indicador dinámico que muestra si el café está abierto o cerrado según el día y hora
+    function actualizarEstadoHorario() {
+      const ahora = new Date();
+      const dia = ahora.getDay(); // 0 = Domingo, 1-6 = Lunes a Sábado
+      const minutosActuales = ahora.getHours() * 60 + ahora.getMinutes();
+      const badge = document.getElementById("live-status");
+
+      let abierto = false;
+      if (dia === 0) {
+        // Domingo: 11:00 AM (660) a 7:00 PM (1140)
+        abierto = minutosActuales >= 660 && minutosActuales < 1140;
+      } else {
+        // Lunes a Sábado: 7:30 AM (450) a 8:00 PM (1200)
+        abierto = minutosActuales >= 450 && minutosActuales < 1200;
+      }
+
+      if (abierto) {
+        badge.textContent = "● Abierto ahora";
+        badge.style.backgroundColor = "#e6eadf";
+        badge.style.color = "#364523";
+      } else {
+        badge.textContent = "○ Cerrado ahora";
+        badge.style.backgroundColor = "#ebe8df";
+        badge.style.color = "#62665c";
+      }
+    }
+
+    actualizarEstadoHorario();
+  </script>
+
+</body>
+</html>

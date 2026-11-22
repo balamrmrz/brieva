@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novedades & Temporada | Brieva. Café & Charcutería</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-cream: #f5f3eb;
+      --bg-card: #ffffff;
+      --olive-primary: #4a5d32;
+      --olive-dark: #364523;
+      --olive-soft: #e6eadf;
+      --text-main: #232620;
+      --text-muted: #62665c;
+      --border-neutral: #dcd9ce;
+      --shadow-soft: 0 10px 28px rgba(74, 93, 50, 0.08);
+      --shadow-hover: 0 14px 32px rgba(74, 93, 50, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-cream);
+      color: var(--text-main);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 18px 64px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 720px;
+    }
+
+    /* Barra superior */
+    .top-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      font-weight: 700;
+      font-size: 0.88rem;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border-neutral);
+      box-shadow: var(--shadow-soft);
+      transition: all 0.25s ease;
+    }
+
+    .back-btn:hover {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      transform: translateX(-3px);
+    }
+
+    .mini-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+
+    .mini-brand img {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 2px solid var(--olive-primary);
+      object-fit: cover;
+    }
+
+    .mini-brand span {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--olive-primary);
+    }
+
+    /* Cabecera */
+    .page-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .page-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.25rem;
+      color: var(--olive-primary);
+      line-height: 1.15;
+    }
+
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 0.96rem;
+      max-width: 530px;
+      margin: 8px auto 0;
+    }
+
+    /* Filtros interactivos */
+    .filter-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 26px;
+    }
+
+    .tab-btn {
+      background-color: var(--bg-card);
+      color: var(--text-main);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .tab-btn:hover {
+      border-color: var(--olive-primary);
+      color: var(--olive-primary);
+    }
+
+    .tab-btn.active {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-soft);
+    }
+
+    /* Tarjeta destacada principal */
+    .spotlight-card {
+      display: grid;
+      grid-template-columns: 240px 1fr;
+      gap: 20px;
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--olive-primary);
+      border-radius: 22px;
+      padding: 18px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-soft);
+      animation: fadeUp 0.45s ease;
+    }
+
+    .spotlight-card.hidden,
+    .news-card.hidden,
+    .horario-banner.hidden {
+      display: none;
+    }
+
+    .spotlight-img {
+      width: 100%;
+      height: 290px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .spotlight-body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 999px;
+    }
+
+    .badge.highlight {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+    }
+
+    .spotlight-body h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.65rem;
+      color: var(--olive-primary);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .spotlight-body p {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .action-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn-small {
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.22s ease, transform 0.2s ease;
+    }
+
+    .btn-small:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      background-color: transparent;
+      color: var(--olive-dark);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 12px;
+      padding: 9px 14px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-outline:hover,
+    .btn-outline.saved {
+      border-color: var(--olive-primary);
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+    }
+
+    /* Grid de novedades y ediciones especiales */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .news-card {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      animation: fadeUp 0.45s ease;
+    }
+
+    .news-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--olive-primary);
+      box-shadow: var(--shadow-hover);
+    }
+
+    .news-card img {
+      width: 100%;
+      height: 230px;
+      object-fit: cover;
+      cursor: pointer;
+    }
+
+    .news-content {
+      padding: 16px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .news-content h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: var(--olive-primary);
+      margin-bottom: 6px;
+    }
+
+    .news-content p {
+      font-size: 0.87rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      flex: 1;
+    }
+
+    .fall-drinks-list {
+      background-color: var(--bg-cream);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: var(--text-main);
+      margin-bottom: 14px;
+      border: 1px solid var(--border-neutral);
+    }
+
+    /* Banner interactivo de Nuevo Horario */
+    .horario-banner {
+      background-color: var(--bg-card);
+      border: 1.5px solid var(--border-neutral);
+      border-radius: 22px;
+      padding: 20px;
+      display: grid;
+      grid-template-columns: 150px 1fr;
+      gap: 18px;
+      align-items: center;
+      box-shadow: var(--shadow-soft);
+      margin-bottom: 28px;
+      animation: fadeUp 0.45s ease;
+    }
+
+    .horario-banner img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      border-radius: 16px;
+      cursor: pointer;
+    }
+
+    .horario-banner h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--olive-primary);
+      margin-bottom: 6px;
+    }
+
+    .horario-banner p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .schedule-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      background-color: var(--olive-soft);
+      color: var(--olive-dark);
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 6px 12px;
+      border-radius: 10px;
+    }
+
+    /* Navegación inferior */
+    .bottom-links {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .nav-pill-btn {
+      flex: 1;
+      text-align: center;
+      text-decoration: none;
+      background-color: var(--olive-primary);
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 14px 18px;
+      border-radius: 16px;
+      transition: background-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .nav-pill-btn:hover {
+      background-color: var(--olive-dark);
+      transform: translateY(-2px);
+    }
+
+    .nav-pill-btn.secondary {
+      background-color: var(--bg-card);
+      color: var(--olive-dark);
+      border: 1.5px solid var(--border-neutral);
+    }
+
+    .nav-pill-btn.secondary:hover {
+      background-color: var(--olive-soft);
+    }
+
+    /* Modal para ampliar flyers/fotos */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(25, 28, 22, 0.88);
+      backdrop-filter: blur(6px);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.open {
+      display: flex;
+    }
+
+    .lightbox-content {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .lightbox-content img {
+      width: 100%;
+      max-height: 82vh;
+      object-fit: contain;
+      border-radius: 18px;
+    }
+
+    .close-lightbox {
+      margin-top: 12px;
+      background: var(--bg-cream);
+      color: var(--olive-dark);
+      border: none;
+      padding: 10px 22px;
+      border-radius: 999px;
+      font-family: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 30px;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 640px) {
+      .spotlight-card,
+      .horario-banner {
+        grid-template-columns: 1fr;
+      }
+      .spotlight-img {
+        height: 250px;
+      }
+      .news-grid {
+        grid-template-columns: 1fr;
+      }
+      .bottom-links {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <!-- NAVEGACIÓN SUPERIOR -->
+    <nav class="top-nav">
+      <a href="index.html" class="back-btn">&larr; Volver al inicio</a>
+      <a href="index.html" class="mini-brand">
+        <span>Brieva.</span>
+      </a>
+    </nav>
+
+    <!-- CABECERA -->
+    <header class="page-header">
+      <h1>Novedades &amp; Temporada</h1>
+      <p>Bebidas de edición limitada, promociones especiales, temporadas y avisos de Brieva. Café &amp; Charcutería en Buena Vista, Tijuana.</p>
+    </header>
+
+    <!-- FILTROS INTERACTIVOS -->
+    <div class="filter-tabs" role="tablist">
+      <button class="tab-btn active" onclick="filtrarNovedades('todos', this)">Todo</button>
+      <button class="tab-btn" onclick="filtrarNovedades('promos', this)">Promos</button>
+      <button class="tab-btn" onclick="filtrarNovedades('temporada', this)">Bebidas &amp; Temporada</button>
+      <button class="tab-btn" onclick="filtrarNovedades('avisos', this)">Avisos</button>
+    </div>
+
+    <!-- NOVEDAD PRINCIPAL DESTACADA -->
+    <section class="spotlight-card" data-category="promos">
+      <img src="img/buenfin.jpg" alt="Promo del Buen Fin en Lattes" class="spotlight-img" onclick="abrirFoto('img/buenfin.jpg', 'Promo del Buen Fin')">
+      <div class="spotlight-body">
+        <div class="badge-row">
+          <span class="badge highlight">Promo Especial</span>
+          <span class="badge">14 al 17 de Noviembre</span>
+        </div>
+        <h2>Promo del Buen Fin en Lattes</h2>
+        <p>
+          Llévate el segundo latte al <strong>50% de descuento</strong> en todos los lattes: frío, caliente, natural o con jarabe. Ideal para compartir con alguien en @brievacafe.
+        </p>
+        <div class="action-row">
+          <button type="button" class="btn-small" onclick="abrirFoto('img/buenfin.jpg', 'Promo del Buen Fin')">Ver flyer completo</button>
+          <button type="button" class="btn-outline" onclick="marcarInteres(this)">Marcar interés</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GRID DE NOVEDADES Y EDICIONES ESPECIALES -->
+    <section class="news-grid">
+
+      <!-- 1. FALL MENU / SPOOKY SEASON -->
+      <article class="news-card" data-category="temporada">
+        <img src="img/otono.jpg" alt="Fall Menu Happy Spooky Season" onclick="abrirFoto('img/otono.jpg', 'Fall Menu Brieva')">
+        <div class="news-content">
+          <div class="badge-row">
+            <span class="badge">Temporada Otoño</span>
+          </div>
+          <h3>Fall Menu &bull; Spooky Season</h3>
+          <p>Sabores especiados y cremosos pensados para la temporada de otoño en sucursal.</p>
+          <div class="fall-drinks-list">
+            <strong>Bebidas de temporada:</strong> Chai Pumpkin, Miel Canela Foam Nuez (con cinnamon toast crunch), Pumpkin Foam Avellana (con canela), Pumpkin Spice Latte y Manzana Foam Vainilla (con crumble de cookie).
+          </div>
+          <div class="action-row">
+            <button type="button" class="btn-small" onclick="abrirFoto('img/otono.jpg', 'Fall Menu Brieva')">Ampliar cartel</button>
+            <button type="button" class="btn-outline" onclick="marcarInteres(this)">Favorito</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. BIRTHDAY COFFEE & BIRTHDAY MATCHA -->
+      <article class="news-card" data-category="temporada">
+        <img src="img/birthday-drinks.jpg" alt="Birthday Coffee y Birthday Matcha" onclick="abrirFoto('img/birthday-velas.jpg', 'Birthday Coffee & Birthday Matcha')">
+        <div class="news-content">
+          <div class="badge-row">
+            <span class="badge">Edición Especial</span>
+          </div>
+          <h3>Birthday Coffee &amp; Matcha</h3>
+          <p>
+            Bebidas festivas coronadas con crema, chispas de colores, galleta y velita de cumpleaños para celebrar en barra o para llevar.
+          </p>
+          <div class="action-row">
+            <button type="button" class="btn-small" onclick="abrirFoto('img/birthday-velas.jpg', 'Birthday Coffee & Birthday Matcha')">Ver con velas</button>
+            <button type="button" class="btn-outline" onclick="marcarInteres(this)">Guardar</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. DÍA DEL CAFÉ -->
+      <article class="news-card" data-category="promos">
+        <img src="img/dia-cafe.jpg" alt="Día del Café - Café a $1 peso" onclick="abrirFoto('img/dia-cafe.jpg', 'Día del Café Brieva')">
+        <div class="news-content">
+          <div class="badge-row">
+            <span class="badge">Celebración 01 Octubre</span>
+          </div>
+          <h3>Día del Café &bull; 2da a $1 peso</h3>
+          <p>
+            Celebramos el Día Internacional del Café con la segunda bebida a solo <strong>$1 peso</strong> (aplicaba en americanos, tónicos y latte natural).
+          </p>
+          <div class="action-row">
+            <button type="button" class="btn-small" onclick="abrirFoto('img/dia-cafe.jpg', 'Día del Café Brieva')">Ver detalle</button>
+            <button type="button" class="btn-outline" onclick="marcarInteres(this)">Recordar</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. CHARCUTERÍA PARA LLEVAR O COMPARTIR -->
+      <article class="news-card" data-category="temporada">
+        <img src="img/tabla4.jpg" alt="Tablas de charcutería en Buena Vista Tijuana" onclick="abrirFoto('img/tabla4.jpg', 'Charcutería Brieva')">
+        <div class="news-content">
+          <div class="badge-row">
+            <span class="badge">Charcutería</span>
+          </div>
+          <h3>Tablas &amp; Pinchos Frescos</h3>
+          <p>
+            Selección de quesos, embutidos, uvas, fresas, aceitunas, galletas y miel preparada al momento para disfrutar ahí o llevar.
+          </p>
+          <div class="action-row">
+            <a href="menu.html" class="btn-small" style="text-decoration:none;">Ver en menú</a>
+            <button type="button" class="btn-outline" onclick="marcarInteres(this)">Antojo</button>
+          </div>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- AVISO DE NUEVO HORARIO -->
+    <section class="horario-banner" data-category="avisos">
+      <img src="img/nuevo-horario.jpg" alt="Nuevo Horario Brieva Café & Charcutería" onclick="abrirFoto('img/nuevo-horario.jpg', 'Nuevo Horario Brieva')">
+      <div>
+        <div class="badge-row">
+          <span class="badge highlight">Aviso Oficial</span>
+          <span class="badge">Buena Vista, TJ</span>
+        </div>
+        <h2>Nuevo Horario de Servicio</h2>
+        <p>Consulta nuestros horarios actualizados para pasar por tu café, matcha o tabla de charcutería en Ing. Juan Ojeda Robles 930.</p>
+        <div class="schedule-chips">
+          <span class="chip">Lun – Sáb: 7:30 AM – 8:00 PM</span>
+          <span class="chip">Domingo: 11:00 AM – 7:00 PM</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <div class="bottom-links">
+      <a href="menu.html" class="nav-pill-btn secondary">&larr; Ir al Menú</a>
+      <a href="eventos.html" class="nav-pill-btn">Ver Eventos &amp; Comunidad &rarr;</a>
+    </div>
+
+    <footer>
+      <p>&copy; 2026 Brieva. Café &amp; Charcutería &bull; Ing. Juan Ojeda Robles 930, Buena Vista, Tijuana</p>
+    </footer>
+  </main>
+
+  <!-- VISOR MODAL -->
+  <div class="lightbox" id="lightbox" onclick="cerrarFoto()">
+    <div class="lightbox-content" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="Vista ampliada">
+      <br>
+      <button type="button" class="close-lightbox" onclick="cerrarFoto()">Cerrar vista</button>
+    </div>
+  </div>
+
+  <script>
+    function filtrarNovedades(categoria, boton) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      boton.classList.add('active');
+
+      const elementos = document.querySelectorAll('[data-category]');
+      elementos.forEach(el => {
+        if (categoria === 'todos' || el.dataset.category === categoria) {
+          el.classList.remove('hidden');
+        } else {
+          el.classList.add('hidden');
+        }
+      });
+    }
+
+    function marcarInteres(boton) {
+      boton.classList.toggle('saved');
+      if (boton.classList.contains('saved')) {
+        boton.dataset.textoOriginal = boton.textContent;
+        boton.textContent = '✓ Guardado';
+      } else {
+        boton.textContent = boton.dataset.textoOriginal || 'Marcar interés';
+      }
+    }
+
+    function abrirFoto(ruta, titulo) {
+      const modal = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      img.src = ruta;
+      img.alt = titulo;
+      modal.classList.add('open');
+    }
+
+    function cerrarFoto() {
+      document.getElementById('lightbox').classList.remove('open');
+    }
+  </script>
+
+</body>
+</html>
